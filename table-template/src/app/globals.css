@@ -19,6 +19,13 @@ select {
   background-position-y: 7px;
 }
 
+/* @layer base {
+  * {
+    @apply dark:bg-[#FBE7E8] 
+        bg-[#edf6f9];
+  }
+} */
+
 /* :root {
   --foreground-rgb: 0, 0, 0;
   --background-start-rgb: 214, 219, 220;

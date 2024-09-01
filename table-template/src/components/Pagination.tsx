@@ -32,7 +32,7 @@ export default function Pagination(props: PaginationProps) {
     
     
     return (
-        <nav className='w-full h-[63px] flex justify-center items-center'>
+        <nav className='w-full h-[63px] flex justify-center items-center dark:bg-darkprimary1'>
             <List>
                 {items.map(({ page, type, selected, ...item }, index) => {
                 let children = null;
@@ -42,7 +42,7 @@ export default function Pagination(props: PaginationProps) {
                 } else if (type === 'page') {
                     children = (
                     <button
-                        className={`text-sm h-[31px] w-[31px] rounded-lg font-medium ${selected ? 'bg-accent1 text-white' : 'bg-secondary1 text-black'}`}
+                        className={`text-sm h-[31px] w-[31px] rounded-lg font-medium ${selected ? 'bg-accent1 text-white' : 'bg-secondary1 text-black dark:text-white dark:bg-darksecondary1'}`}
                         type="button"
                         {...item}
                     >
@@ -51,7 +51,7 @@ export default function Pagination(props: PaginationProps) {
                     );
                 } else {
                     children = (
-                    <button className='h-full flex items-center mr-1 text-sm text-secondary2 text-secondary2' type="button" {...item}>
+                    <button className='h-full flex items-center mr-1 text-sm text-secondary2 text-secondary2 dark:text-white' type="button" {...item}>
                         {type.charAt(0).toUpperCase() + type.slice(1)}
                     </button>
                     );

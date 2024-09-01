@@ -25,6 +25,7 @@ export default function TablePage() {
     const [defaultData, setDefaultData] = useState<DataTypes>(data);
     const [sortedData, setSortedData] = useState<DataTypes>(data);
     const [currentData, setCurrentData] = useState<DataTypes>((sortedData as DataTypes as any[]).slice(0, 10));
+    const [sortValue, setSortValue] = useState<string>("");
     const [paginationValue, setPaginationValue] = useState<number>(1);
     const [rowsPerPageValue, setRowsPerPageValue] = useState<number>(10);
     const [paginationCount, setPaginationCount] = useState<number>(Math.floor(data.length/rowsPerPageValue));
@@ -34,6 +35,68 @@ export default function TablePage() {
         const deleteItemIndex = (defaultData as DataTypes as any[]).findIndex((e) => e["Tracking ID"] === rowId);
         setDefaultData([...(defaultData as DataTypes as any[]).slice(0, deleteItemIndex), ...(defaultData as DataTypes as any[]).slice(deleteItemIndex + 1, (defaultData as DataTypes as any[]).length)] )
     }
+
+    // const sortByItem = (comparisonFunction: (value1: string|number, value2: string|number) => number ) => {
+    //     setSortedData((sortedData as DataTypes as any[]).sort(comparisonFunction))
+    // }
+
+    // const sortByItem = (sortValue: string) => {
+    //     // const comparisonFunction = (a: any, b: any) => {
+    //     //     return  Number(a[sortValue]) - Number(b[sortValue])
+    //     // }
+    //     // setSortedData((sortedData as DataTypes as any[]).sort(comparisonFunction));
+    //     // console.log((sortedData as DataTypes as any[]).sort(comparisonFunction))
+        
+
+    //     const newArr = (sortedData as DataTypes as any[]).sort((a, b) => {
+    //         const nameA = a[sortValue].toUpperCase(); // ignore upper and lowercase
+    //         const nameB = b[sortValue].toUpperCase(); // ignore upper and lowercase
+    //         if (nameA < nameB) {
+    //           return -1;
+    //         }
+    //         if (nameA > nameB) {
+    //           return 1;
+    //         }
+    //         return 0;
+    //       });
+    //       console.log(newArr, "-newArr");
+    //       setSortedData(
+    //         (sortedData as DataTypes as any[]).sort((a, b) => {
+    //             const nameA = a[sortValue].toUpperCase(); // ignore upper and lowercase
+    //             const nameB = b[sortValue].toUpperCase(); // ignore upper and lowercase
+    //             if (nameA < nameB) {
+    //               return -1;
+    //             }
+    //             if (nameA > nameB) {
+    //               return 1;
+    //             }
+    //             return 0;
+    //           })
+    //       )
+    //       console.log(sortedData, "-sortedData");
+    // }
+
+    useEffect(() => {
+        
+        setSortedData(
+            (sortedData as DataTypes as any[]).sort((a, b) => {
+                const nameA = String(a[sortValue]).toUpperCase(); // ignore upper and lowercase
+                const nameB = String(b[sortValue]).toUpperCase(); // ignore upper and lowercase
+                if (nameA < nameB) {
+                  return -1;
+                }
+                if (nameA > nameB) {
+                  return 1;
+                }
+                return 0;
+              })
+          );
+
+          console.log(sortValue)
+          console.log(sortedData)
+	}, [sortValue, sortedData, currentData]);
+
+    // comparisonFunction
 
     
     
@@ -77,9 +140,10 @@ export default function TablePage() {
 // -------------------------------------------
 
     return (
-        <main className="flex min-h-screen flex-col">
+        <main className="flex min-h-screen flex-col min-w-screen">
             <Header rowsPerPageValue={rowsPerPageValue} setRowsPerPageValue={setRowsPerPageValue} setPaginationCount={setPaginationCount} searchString={searchString} setSearchString={setSearchString}/>
-            <Table data={currentData} deleteRow={deleteRow}/>
+            {/* <Table data={currentData} deleteRow={deleteRow} sortByItem={sortByItem}/> */}
+            <Table data={currentData} deleteRow={deleteRow} setSortValue={setSortValue}/>
             {
               (sortedData as DataTypes as any[]).length > rowsPerPageValue ?  
                 <Pagination paginationValue={paginationValue} paginationCount={paginationCount} setPaginationValue={setPaginationValue}/>

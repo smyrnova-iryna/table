@@ -10,7 +10,9 @@ import SortIcon from "../../public/bxs_sort-alt.svg";
 // import { useEffect, useState } from "react";
 interface TableProps {
   data: DataTypes,
-  deleteRow: (value: number) => void
+  deleteRow: (value: number) => void,
+  setSortValue : (value: string) => void
+  // sortByItem: (value: string) => void
 }
 
 
@@ -24,7 +26,7 @@ export default function Table(props: TableProps) {
 
 
     return ( 
-      <table className="text-sm text-black">
+      <table className="text-sm text-black dark:bg-darkprimary1 dark:text-white">
         <thead >
           <tr>
             <th className={`${tableHeadingStyles} text-center`}>Tracking ID</th>
@@ -32,6 +34,7 @@ export default function Table(props: TableProps) {
               <div className={tableHeadingWithSortStyles}>
                 <span>Product</span>
                 <Image
+                  onClick={() => {props.setSortValue("Product Name")}}
                   src={SortIcon}
                   alt="sort icon"
                   width={17}
@@ -80,8 +83,8 @@ export default function Table(props: TableProps) {
         <tbody >
           {
             (props.data as DataTypes as any[]).map((item) => (
-              <tr key={item["Tracking ID"]} className={(props.data as DataTypes as any[]).indexOf(item)%2 === 1 ? "bg-white" : "bg-primary1"}>
-                <td className={`${tableColumnStyles} text-center`}>{(props.data as DataTypes as any[]).indexOf(item)}#{item["Tracking ID"]}</td>
+              <tr key={item["Tracking ID"]} className={(props.data as DataTypes as any[]).indexOf(item)%2 === 1 ? "bg-white dark:bg-darkprimary1" : "bg-primary1 dark:bg-darkprimary2"}>
+                <td className={`${tableColumnStyles} text-center`}>#{item["Tracking ID"]}</td>
                 <td className={`${tableColumnStyles} flex flex-row gap-2 items-center`}>
                   <Image
                     className="rounded-lg"
