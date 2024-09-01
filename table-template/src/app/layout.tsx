@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import { Montserrat } from "next/font/google";
-import { type ThemeProviderProps } from "next-themes/dist/types";
 import "./globals.css";
 
 const montserrat = Montserrat({ subsets: ["latin"] });
@@ -12,7 +11,7 @@ export const metadata: Metadata = {
 
 import Theme from "@/components/ThemeProvider"
 
-export default function Layout({ children }: ThemeProviderProps) {
+export default function Layout({ children }: any) {
   return (
     <html suppressHydrationWarning>
       <body className={`${montserrat.className} antialiased font-medium`}>
