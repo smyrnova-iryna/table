@@ -10,12 +10,7 @@ const { theme, setTheme } = useTheme()
     <div className="flex flex-col justify-center ml-3">
       <p className='flex align-center items-center gap-2 rounded-lg border-[1px] border-solid border-secondary2 p-2'>
  			<input className='light-switch cursor-pointer' name="light-switch" type="checkbox" 
-      onChange={() => {
-        if (theme === 'dark') {
-          return setTheme('light')
-        }
-        return setTheme('dark')
-      }}
+      onChange={() => {theme === 'dark' ? setTheme('light') : setTheme('dark')}}
       />
  			<span>Switch theme</span>
 		</p>

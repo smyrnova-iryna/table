@@ -6,9 +6,7 @@ import Pagination from "./Pagination";
 import { useEffect, useState } from "react";
 import data from "../app/data/dataset.json";
 
-export interface DataTypes {
-    [index: number] : 
-    {
+interface DataType {
         ["Tracking ID"]: number,
         ["Product Image"]: string,
         ["Product Name"]: string,
@@ -17,11 +15,13 @@ export interface DataTypes {
         ["Amount"]: number,
         ["Payment Mode"]: string,
         ["Status"]: string
-    }
 }
 
+export interface DataTypes extends Array<DataType>{}
+
+
 export default function TablePage() {
-    
+
     const [defaultData, setDefaultData] = useState<DataTypes>(data);
     const [sortedData, setSortedData] = useState<DataTypes>(data);
     const [currentData, setCurrentData] = useState<DataTypes>((data as DataTypes as any[]).slice(0, 10));
@@ -31,15 +31,16 @@ export default function TablePage() {
     const [searchString, setSearchString] = useState<string>("");
     const [descendingSortOrder, setDescendingSortOrder] = useState<boolean>(true)
 
+
     const deleteRow = (rowId: number) => {
-        const deleteItemIndex = (defaultData as DataTypes as any[]).findIndex((e) => e["Tracking ID"] === rowId);
-        setDefaultData([...(defaultData as DataTypes as any[]).slice(0, deleteItemIndex), ...(defaultData as DataTypes as any[]).slice(deleteItemIndex + 1, (defaultData as DataTypes as any[]).length)] )
+        const deleteItemIndex = defaultData.findIndex((e) => e["Tracking ID"] === rowId);
+        setDefaultData([...defaultData.slice(0, deleteItemIndex), ...defaultData.slice(deleteItemIndex + 1, defaultData.length)])
     }
 
 
     const sortData = (sortValue: string) => {
         if (descendingSortOrder) {
-            setSortedData([...(sortedData as DataTypes as any[]).sort((a, b) => {
+            setSortedData([...sortedData.sort((a: any, b: any) => {
                 const nameA = a[sortValue].toUpperCase(); 
                 const nameB = b[sortValue].toUpperCase(); 
                 if (nameA < nameB) {
@@ -51,7 +52,7 @@ export default function TablePage() {
                 return 0;
                 })]);
         } else {
-            setSortedData([...(sortedData as DataTypes as any[]).sort((a, b) => {
+            setSortedData([...sortedData.sort((a: any, b: any) => {
                 const nameA = a[sortValue].toUpperCase(); 
                 const nameB = b[sortValue].toUpperCase(); 
                 if (nameA > nameB) {
@@ -65,33 +66,32 @@ export default function TablePage() {
         }
         setDescendingSortOrder(!descendingSortOrder)
     }
-      
-       
 
 
     useEffect(() => {
         if (searchString) {
             setSortedData([
-                ...(defaultData as DataTypes as any[]).filter((item) => item["Tracking ID"].toString().substr(0, searchString.length) === searchString.toString()), 
-                ...(defaultData as DataTypes as any[]).filter((item) => item["Product Image"].substr(0, searchString.length).toUpperCase() === searchString.toUpperCase()),
-                ...(defaultData as DataTypes as any[]).filter((item) => item["Product Name"].substr(0, searchString.length).toUpperCase() === searchString.toUpperCase()),
-                ...(defaultData as DataTypes as any[]).filter((item) => item["Customer"].substr(0, searchString.length).toUpperCase() === searchString.toUpperCase()),
-                ...(defaultData as DataTypes as any[]).filter((item) => item["Date"].substr(0, searchString.length) === searchString),
-                ...(defaultData as DataTypes as any[]).filter((item) => item["Amount"].toString().substr(0, searchString.length) === searchString.toString()),
-                ...(defaultData as DataTypes as any[]).filter((item) => item["Payment Mode"].substr(0, searchString.length).toUpperCase() === searchString.toUpperCase()),
-                ...(defaultData as DataTypes as any[]).filter((item) => item["Status"].substr(0, searchString.length).toUpperCase() === searchString.toUpperCase())
+                ...defaultData.filter((item) => item["Tracking ID"].toString().substring(0, searchString.length) === searchString.toString()), 
+                ...defaultData.filter((item) => item["Product Name"].substring(0, searchString.length).toLowerCase() === searchString.toLowerCase()),
+                ...defaultData.filter((item) => item["Customer"].substring(0, searchString.length).toLowerCase() === searchString.toLowerCase()),
+                ...defaultData.filter((item) => item["Date"].substring(0, searchString.length) === searchString),
+                ...defaultData.filter((item) => item["Amount"].toString().substring(0, searchString.length) === searchString.toString()),
+                ...defaultData.filter((item) => item["Payment Mode"].substring(0, searchString.length).toLowerCase() === searchString.toLowerCase()),
+                ...defaultData.filter((item) => item["Status"].substring(0, searchString.length).toLowerCase() === searchString.toLowerCase())
             ])
         } 
-        else setSortedData([...(defaultData as DataTypes as any[])])
+        else setSortedData([...defaultData])
     }, [searchString, defaultData]);
 
+
     useEffect(() => {
-        setPaginationCount(Math.floor((sortedData as DataTypes as any[]).length/rowsPerPageValue));
+        setPaginationCount(Math.floor(sortedData.length/rowsPerPageValue));
         setPaginationValue(1);
 	}, [rowsPerPageValue, sortedData]);
 
+
     useEffect(() => {
-        setCurrentData([...(sortedData as DataTypes as any[]).slice(rowsPerPageValue * (paginationValue - 1), rowsPerPageValue * paginationValue)]);
+        setCurrentData([...sortedData.slice(rowsPerPageValue * (paginationValue - 1), rowsPerPageValue * paginationValue)]);
 	}, [rowsPerPageValue, paginationValue, sortedData]);
 
 
@@ -99,8 +99,7 @@ export default function TablePage() {
         <main className="flex min-h-screen flex-col min-w-screen">
             <Header rowsPerPageValue={rowsPerPageValue} setRowsPerPageValue={setRowsPerPageValue} setPaginationCount={setPaginationCount} searchString={searchString} setSearchString={setSearchString}/>
             <Table data={currentData} deleteRow={deleteRow} sortData={sortData}/>
-            {
-              (sortedData as DataTypes as any[]).length > rowsPerPageValue ?  
+            {sortedData.length > rowsPerPageValue ?  
                 <Pagination paginationValue={paginationValue} paginationCount={paginationCount} setPaginationValue={setPaginationValue}/>
               : <></>
             }

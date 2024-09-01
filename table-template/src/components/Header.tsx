@@ -18,7 +18,7 @@ export default function Header(props: HeaderProps) {
         <div className="flex items-start gap-2 flex-col sm:flex-row sm:gap-6 sm:items-center">
             <p className="flex items-center gap-3 relative">
                 <span>Show</span>
-                <select value={props.rowsPerPageValue} onChange={(e) => {props.setRowsPerPageValue(Number(e.target.value))}} id="rowsperpage" className="bg-secondary1 rounded-lg border-transparent p-2 pr-4 cursor-pointer dark:bg-darksecondary1">
+                <select value={props.rowsPerPageValue} onChange={(e) => props.setRowsPerPageValue(Number(e.target.value))} id="rowsperpage" className="bg-secondary1 rounded-lg border-transparent p-2 pr-4 cursor-pointer dark:bg-darksecondary1">
                     <option value="10">10</option>
                     <option value="15">15</option>
                     <option value="20">20</option>
@@ -27,7 +27,7 @@ export default function Header(props: HeaderProps) {
                 </select>
                 <span>entries</span>
             </p>
-            <input onChange={(e) => {() => console.log(e.target.value); props.setSearchString(String(e.target.value)); console.log('props:', props.searchString)}}  placeholder="Search..." className="rounded-lg border-2 border-solid border-secondary2 p-2 pl-[33px] w-[160px] sm:w-[218px] dark:bg-darkprimary1 dark:border-white searchbar" />
+            <input onChange={(e) => props.setSearchString((e.target.value).toString())}  placeholder="Search..." className="rounded-lg border-2 border-solid border-secondary2 p-2 pl-[33px] w-[160px] sm:w-[218px] dark:bg-darkprimary1 dark:border-white searchbar" />
         </div>
         <div className="flex flex-col gap-2 sm:flex-row sm:gap-4">
             <ThemeToggler/>

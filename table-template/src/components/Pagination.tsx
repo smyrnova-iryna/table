@@ -23,10 +23,7 @@ export default function Pagination(props: PaginationProps) {
     const { items } = usePagination({
         count: props.paginationCount,
         boundaryCount: 0,
-        onChange: (event, page) => { 
-            props.setPaginationValue(page);
-            console.log(props.paginationValue)
-        },
+        onChange: (event, page) => props.setPaginationValue(page),
         page: props.paginationValue
       });
     

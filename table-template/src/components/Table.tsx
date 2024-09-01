@@ -30,7 +30,7 @@ export default function Table(props: TableProps) {
                 <span>Product</span>
                 <Image
                   className="cursor-pointer"
-                  onClick={() => {props.sortData("Product Name")}}
+                  onClick={() => props.sortData("Product Name")}
                   src={SortIcon}
                   alt="sort icon"
                   width={17}
@@ -43,7 +43,7 @@ export default function Table(props: TableProps) {
                 <span>Customer</span>
                 <Image
                   className="cursor-pointer"
-                  onClick={() => {props.sortData("Customer")}}
+                  onClick={() => props.sortData("Customer")}
                   src={SortIcon}
                   alt="sort icon"
                   width={17}
@@ -56,7 +56,7 @@ export default function Table(props: TableProps) {
                 <span>Date</span>
                 <Image
                   className="cursor-pointer"
-                  onClick={() => {props.sortData("Date")}}
+                  onClick={() => props.sortData("Date")}
                   src={SortIcon}
                   alt="sort icon"
                   width={17}
@@ -71,7 +71,7 @@ export default function Table(props: TableProps) {
                 <span>Status</span>
                 <Image
                   className="cursor-pointer"
-                  onClick={() => {props.sortData("Status")}}
+                  onClick={() => props.sortData("Status")}
                   src={SortIcon}
                   alt="sort icon"
                   width={17}
@@ -84,17 +84,17 @@ export default function Table(props: TableProps) {
         </thead>
         <tbody >
           {
-            (props.data as DataTypes as any[]).map((item) => (
-              <tr key={item["Tracking ID"]} className={(props.data as DataTypes as any[]).indexOf(item)%2 === 1 ? "bg-white dark:bg-darkprimary1" : "bg-primary1 dark:bg-darkprimary2"}>
+            props.data.map((item) => (
+              <tr key={item["Tracking ID"]} className={props.data.indexOf(item)%2 === 1 ? "bg-white dark:bg-darkprimary1" : "bg-primary1 dark:bg-darkprimary2"}>
                 <td className={`${tableColumnStyles} text-center`}>#{item["Tracking ID"]}</td>
                 <td className={`${tableColumnStyles} flex flex-row gap-2 items-center`}>
                   <Image
-                    className="rounded-lg"
+                    className="rounded-lg h-fit"
                     src={item["Product Image"]}
                     alt="product"
                     unoptimized
                     width={32}
-                    height={32}
+                    height={0}
                 />
                   <span>{item["Product Name"]}</span>
                 </td>
@@ -117,7 +117,7 @@ export default function Table(props: TableProps) {
                     />
                     <Image
                         className="cursor-pointer"
-                        onClick={() => {props.deleteRow(item["Tracking ID"])}}
+                        onClick={() => props.deleteRow(item["Tracking ID"])}
                         src={TrashIcon}
                         alt="trash icon"
                         width={24}
