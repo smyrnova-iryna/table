@@ -5,14 +5,12 @@ import Image from 'next/image';
 import EditIcon from "../../public/edit.svg";
 import TrashIcon from "../../public/trash.svg";
 import SortIcon from "../../public/bxs_sort-alt.svg";
-// import { DataType } from "./TablePage";
 
-// import { useEffect, useState } from "react";
+
 interface TableProps {
   data: DataTypes,
   deleteRow: (value: number) => void,
-  setSortValue : (value: string) => void
-  // sortByItem: (value: string) => void
+  sortData : (value: string) => void
 }
 
 
@@ -22,19 +20,17 @@ export default function Table(props: TableProps) {
     const tableHeadingWithSortStyles = "flex flex-row justify-between";
     const tableColumnStyles = "pr-4 pl-4 pt-6 pb-6 font-medium min-w-[121px]"
 
-    // console.log(props.data, "data from TABLE")
-
-
     return ( 
       <table className="text-sm text-black dark:bg-darkprimary1 dark:text-white">
-        <thead >
+        <thead>
           <tr>
             <th className={`${tableHeadingStyles} text-center`}>Tracking ID</th>
             <th className={tableHeadingStyles}>
               <div className={tableHeadingWithSortStyles}>
                 <span>Product</span>
                 <Image
-                  onClick={() => {props.setSortValue("Product Name")}}
+                  className="cursor-pointer"
+                  onClick={() => {props.sortData("Product Name")}}
                   src={SortIcon}
                   alt="sort icon"
                   width={17}
@@ -46,6 +42,8 @@ export default function Table(props: TableProps) {
               <div className={tableHeadingWithSortStyles}>
                 <span>Customer</span>
                 <Image
+                  className="cursor-pointer"
+                  onClick={() => {props.sortData("Customer")}}
                   src={SortIcon}
                   alt="sort icon"
                   width={17}
@@ -57,6 +55,8 @@ export default function Table(props: TableProps) {
               <div className={tableHeadingWithSortStyles}>
                 <span>Date</span>
                 <Image
+                  className="cursor-pointer"
+                  onClick={() => {props.sortData("Date")}}
                   src={SortIcon}
                   alt="sort icon"
                   width={17}
@@ -70,6 +70,8 @@ export default function Table(props: TableProps) {
               <div className={tableHeadingWithSortStyles}>
                 <span>Status</span>
                 <Image
+                  className="cursor-pointer"
+                  onClick={() => {props.sortData("Status")}}
                   src={SortIcon}
                   alt="sort icon"
                   width={17}

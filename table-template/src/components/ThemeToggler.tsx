@@ -17,7 +17,7 @@ const { theme, setTheme } = useTheme()
         return setTheme('dark')
       }}
       />
- 			<span>Dark mode</span>
+ 			<span>Switch theme</span>
 		</p>
     </div>
   )
